@@ -1,12 +1,27 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <div class="row">
+        <div class="col-3">
+          <InsertDay />
+        </div>
+        <div class="col">
+          <Display />
+        </div>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
+<script>
+import InsertDay from "./components/InsertDay";
+import Display from './components/Display'
+export default {
+  components: {
+    InsertDay,
+    Display
+  },
+};
+</script>
 
 <style>
 #app {
