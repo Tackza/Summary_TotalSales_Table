@@ -35,7 +35,7 @@ export default new Vuex.Store({
     TRANSACTION_BY_SORT_TOTAL(state) {
       const transactions_Array = Object.values(state.byTransactionReduce);
       const transactions_sortTotal = transactions_Array.sort(
-        (a, b) => b.amount - a.amount
+        (a, b) => b.items.amount - a.items.amount
       );
       state.byTransactionSortTotal = transactions_sortTotal;
     },
@@ -43,7 +43,7 @@ export default new Vuex.Store({
     TRANSACTION_BY_SORT_QUANTITY(state) {
       const transactions_Array = Object.values(state.byTransactionReduce);
       const transactions_sortQuantity = transactions_Array.sort(
-        (a, b) => b.quantity - a.quantity
+        (a, b) => b.items.quantity - a.items.quantity
       );
       state.byTransactionSortQuantity = transactions_sortQuantity;
     },
@@ -64,27 +64,28 @@ export default new Vuex.Store({
     },
 
     computedTransactionsBySku({ commit }) {
-      console.log(this.state.byTransactionFilter);
       const itemDisplay = this.state.byTransactionFilter.reduce((acc, curr) => {
         const initDisplay = {
-          name: curr.sku.name,
-          quantity: 0,
-          amount: 0,
-          discountPercentEachUnit: 0,
+          date: curr.date,
+          items: {
+            name: curr.sku.name,
+            quantity: 0,
+            amount: 0,
+            discountPercentEachUnit: 0,
+          },
         };
-        
+
         acc[curr.sku.sku] = acc[curr.sku.sku] || initDisplay;
 
         const itemQuantity = curr.qty;
         const itemPrice = curr.sku.price;
         const itemDiscountPercentEachUnit = curr.discountPercentEachUnit;
-        acc[curr.sku.sku].quantity += itemQuantity;
-        acc[curr.sku.sku].amount += itemPrice * itemQuantity;
-        acc[curr.sku.sku].discountPercentEachUnit = itemDiscountPercentEachUnit;
-        console.log(acc);
+        acc[curr.sku.sku].items.quantity += itemQuantity;
+        acc[curr.sku.sku].items.amount += itemPrice * itemQuantity;
+        acc[curr.sku.sku].items.discountPercentEachUnit = itemDiscountPercentEachUnit;
         return acc;
       }, {});
-
+      console.log(itemDisplay);
       commit("TRANSACTION_BY_SKU", itemDisplay);
     },
 

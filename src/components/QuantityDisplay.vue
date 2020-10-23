@@ -19,10 +19,10 @@
         <tbody>
           <tr v-for="(data, index) in byReduceSortTotalQuantity" :key="index">
             <th scope="row">{{ index+1 }}</th>
-            <td>{{ data.name }}</td>
-            <td>{{ data.quantity }}</td>
-            <td>{{ data.amount }}</td>
-            <td>{{ data.discountPercentEachUnit }} %</td>
+            <td>{{ data.items.name }}</td>
+            <td>{{ data.items.quantity }}</td>
+            <td>{{ data.items.amount }}</td>
+            <td>{{ data.items.discountPercentEachUnit }} %</td>
           </tr>
         </tbody>
       </table>
